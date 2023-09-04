@@ -8,27 +8,40 @@
   </head>
   <body>
     <div id="caja1">
-      <h1>Calcular Contrato de Alquiler</h1>
+      <h1>Gestor de Contratos de Alquiler</h1>
     </div>
     <br />
 
     <div id="cajaPersonal">
-      <h1>Datos de contacto</h1>
-      <form>
-        <label for="nombre">Nombre:</label>
-        <input type="text" id="nombre" disabled />
+      <h1>Carga de clientes</h1>
+      <br />
+      <div class="formulario">
+        <form>
+          <label for="nombre">Nombre:</label>
+          <input type="text" id="nombre" />
 
-        <label for="email">E-mail:</label>
-        <input type="email" id="email" disabled />
+          <label for="dni">DNI:</label>
+          <input type="number" id="dni" />
 
-        <label for="telefono">Teléfono (Opcional):</label>
-        <input type="number" id="telefono" disabled />
-      </form>
+          <label for="email">E-mail:</label>
+          <input type="email" id="email" />
+
+          <label for="telefono">Teléfono (Opcional):</label>
+          <input type="number" id="telefono" />
+        </form>
+        <button id="btnAgregar">Agregar</button>
+        <button id="btnBuscar">Buscar cliente por DNI</button>
+      </div>
     </div>
     <br />
     <br />
-    <div style="background-color: beige"><h1>Completar las opciones</h1></div>
-    <div id="caja2">
+    <div class="ocultar">
+      <h1 id="hide">La DB de clientes está vacía</h1>
+      <select id="selector"></select>
+      <p id="parrafo">sdfg</p>
+    </div>
+
+    <div id="caja2" disabled>
       <div class="selectores">
         <h1 style="display: contents">Importe inicial</h1>
         <input type="text" id="importeInicial" name="importeInicial" />
@@ -61,8 +74,7 @@
       <div class="selectores">
         <h1>Porcentaje de aumento (%)</h1>
         <input type="text" id="porcentaje" name="porcentaje" />
-
-        <input type="button" value="CALCULAR" onclick="calcular();" />
+        <button id="btnCalcular">Calcular</button>
       </div>
     </div>
     <div id="caja3">
