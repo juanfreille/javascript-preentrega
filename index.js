@@ -98,19 +98,28 @@ function selectabladata() {
       console.log("contrato encontrado en la db, cargandolo");
       document.getElementById("importeInicial").value =
         contratoEncontrado.importeInicial;
-      document.getElementById("miseleccion").options[
-        document.getElementById("miseleccion").selectedIndex
-      ].value = contratoEncontrado.duracion;
-      document.getElementById("frecuencia").options[
-        document.getElementById("frecuencia").selectedIndex
-      ].text = contratoEncontrado.frecuencia;
+
+      var select = document.getElementById("miseleccion");
+      for (var i = 0; i < select.options.length; i++) {
+        if (select.options[i].value == contratoEncontrado.duracion) {
+          select.options[i].selected = true;
+        }
+      }
+
+      var select = document.getElementById("frecuencia");
+      for (var i = 0; i < select.options.length; i++) {
+        if (select.options[i].value == contratoEncontrado.frecuencia) {
+          select.options[i].selected = true;
+        }
+      }
+
       document.getElementById("porcentaje").value =
         contratoEncontrado.porcentaje;
     } else {
       document.getElementById("importeInicial").value = "";
       document.getElementById("miseleccion").options[
         document.getElementById("miseleccion").selectedIndex
-      ].value = 1;
+      ].value = 2;
       document.getElementById("frecuencia").options[
         document.getElementById("frecuencia").selectedIndex
       ].text = 3;
@@ -214,7 +223,11 @@ function clickBuscarCliente() {
 function clickCalcular() {
   console.log(tablaClientes);
   let valor = Number(document.getElementById("importeInicial").value);
-  let duracion = Number(document.getElementById("miseleccion").value);
+  let duracion = Number(
+    document.getElementById("miseleccion").options[
+      document.getElementById("miseleccion").selectedIndex
+    ].text
+  );
   let frecuencia = Number(
     document.getElementById("frecuencia").options[
       document.getElementById("frecuencia").selectedIndex
@@ -244,21 +257,22 @@ function clickCalcular() {
     );
   } else {
     alert("El contrato correspondiente a ese dni ya existe");
-    // const elementoNuevo = {
-    //   dni: document.getElementById("selector").value,
-    //   importeInicial: valor,
-    //   duracion: duracion,
-    //   frecuencia: frecuencia,
-    //   porcentaje: porcentaje,
-    // };
-    // const miArray = new Contratos(tablaContratos);
-    // // miArray.reemplazarElementoPorDni(elementoNuevo);
-    // console.log(tablaContratos);
-  }
+    tablaContratos.push(
+      new Contratos(
+        document.getElementById("selector").value,
+        valor,
+        duracion,
+        frecuencia,
+        porcentaje
+      )
+    );
 
-  // // Validación de numeros
-  function validarNumero(numero) {
-    return !isNaN(numero);
+    let reversedArray = tablaContratos.reverse();
+    const sinRepetidos = reversedArray.filter((obj, index) => {
+      return index === tablaContratos.findIndex((o) => obj.dni === o.dni);
+    });
+
+    console.log(sinRepetidos);
   }
 
   // Validación de valores numéricos
@@ -267,19 +281,19 @@ function clickCalcular() {
   } else {
     // Asignación de valores según duración seleccionada
     switch (duracion) {
-      case 1:
+      case 2:
         duracion = 24;
         comision = 5 / 100;
         break;
-      case 2:
+      case 3:
         duracion = 36;
         comision = 6 / 100;
         break;
-      case 3:
+      case 4:
         duracion = 48;
         comision = 7 / 100;
         break;
-      case 4:
+      case 5:
         duracion = 60;
         comision = 8 / 100;
         break;
@@ -326,6 +340,11 @@ function clickCalcular() {
     document.getElementById("caja3").innerHTML = "<h1>" + lineas + "</h1>";
     document.getElementById("caja3").style.height = "300px";
   }
+}
+
+// // Validación de numeros
+function validarNumero(numero) {
+  return !isNaN(numero);
 }
 
 // Función para crear la tabla
